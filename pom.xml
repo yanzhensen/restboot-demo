@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.sam</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>restboot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>restboot</name>
     <description>Demo project for Spring Boot</description>
@@ -160,7 +160,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.72</version>
         </dependency>
 
         <dependency>

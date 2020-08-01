@@ -4,7 +4,7 @@
 <Configuration status="off" monitorInterval="600">
     <properties>
         <!--通用变量-->
-        <property name="LOG_HOME" value="logs/demo"/>
+        <property name="LOG_HOME" value="logs/restboot"/>
         <property name="INFO_LOG_FILE_NAME" value="info"/>
         <property name="ERROR_LOG_FILE_NAME" value="error"/>
         <Property name="PID">????</Property>
