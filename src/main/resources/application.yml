@@ -1,0 +1,86 @@
+logging:
+  config: classpath:log4j2.xml
+mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml,classpath:mapper/*/*Mapper.xml
+  global-config:
+    db-config:
+      insert-strategy: not_null
+      update-strategy: not_null
+      select-strategy: not_empty
+      id-type: auto
+    banner: false
+  # 扫描枚举类 # 支持统配符 * 或者 ; 分割
+  type-enums-package: com.sam.enums
+  # 实体扫描，多个package用逗号或者分号分隔
+  type-aliases-package: com.sam.project.*.model.entity;com.sam.project.*.model.dto
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+      FAIL_ON_EMPTY_BEANS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    default-property-inclusion: non_null
+    mapper:
+      PROPAGATE_TRANSIENT_MARKER: true
+    parser:
+      ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER: true
+  datasource:
+    dynamic:
+      ## Hikari 连接池配置 ------ 详细配置请访问：https://github.com/brettwooldridge/HikariCP
+      hikari:
+        ## 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+        is-auto-commit: false
+        ## 数据库连接超时时间
+        connection-timeout: 30000
+        ## 空闲连接存活最大时间
+        idle-timeout: 25000
+        ## 不支持
+        login-timeout: 5
+        ## 此属性控制池中连接的最长生命周期，值0表示无限生命周期
+        max-lifetime: 30000
+        is-read-only: false
+        validation-timeout: 3000
+        ## 连接池最大连接数
+        max-pool-size: 10
+        ## 最小空闲连接数量
+        min-idle: 1
+        data-source-properties:
+          cachePrepStmts: true
+          prepStmtCacheSize: 250
+          prepStmtCacheSqlLimit: 2048
+          useServerPrepStmts: true
+          useLocalSessionState: true
+          rewriteBatchedStatements: true
+          cacheResultSetMetadata: true
+          cacheServerConfiguration: true
+          elideSetAutoCommits: true
+          maintainTimeStats: false
+  aop:
+    auto: true
+    proxy-target-class: true
+  liquibase:
+    enabled: false
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      enabled: true #是否启用http上传处理
+      max-file-size: 10MB #最大请求文件的大小
+      max-request-size: 10MB #设置单个文件最大长度
+datasource:
+  ## 云端数据源
+  driver: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/restbootdb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+  username: root
+  password: root
+#  sql: "SELECT * FROM datasource"
+sam:
+  name: Sam # 名称
+  version: 1.0 # 版本
+  copyrightYear: 2020 # 版权年份
+  profile: D:/SamPhoto/uploadPath # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  addressEnabled: false # 获取ip地址开关
+  pwdSalt: "as35ilsdfjinx7zxc"
