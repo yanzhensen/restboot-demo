@@ -70,6 +70,7 @@ public class ShiroAutoConfiguration {
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/login", "anon");
         filterMap.put("/logout", "anon");
+        filterMap.put("/common/**", "anon");
         filterMap.put("/open/**", "anon");
         filterMap.put("/**", "jwt");
         shiroFilter.setFilterChainDefinitionMap(filterMap);

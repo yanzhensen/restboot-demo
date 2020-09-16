@@ -7,6 +7,7 @@ import com.sam.framework.exception.ApiException;
 import com.sam.framework.model.ErrorCode;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.Map;
@@ -314,6 +315,31 @@ public class ApiAssert {
      */
     public static void isEmpty(ErrorCode errorCode, Map<?, ?> map) {
         if (CollectionUtils.isNotEmpty(map)) {
+            failure(errorCode);
+        }
+    }
+
+
+    /**
+     * 有空的字符串就抛出异常
+     *
+     * @param errorCode
+     * @param css
+     */
+    public static void notStrEmpty(ErrorCode errorCode, CharSequence... css) {
+        if (StringUtils.isAllEmpty(css)) {
+            failure(errorCode);
+        }
+    }
+
+    /**
+     * 有值的字符串就抛出异常
+     *
+     * @param errorCode
+     * @param css
+     */
+    public static void isStrEmpty(ErrorCode errorCode, CharSequence... css) {
+        if (StringUtils.isNoneEmpty(css)) {
             failure(errorCode);
         }
     }

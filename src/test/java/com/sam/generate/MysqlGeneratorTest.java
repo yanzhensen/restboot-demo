@@ -10,10 +10,14 @@ import org.junit.jupiter.api.Test;
  */
 public class MysqlGeneratorTest {
 
+    String url = "jdbc:mysql://127.0.0.1:3306/restbootdb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false";
+    String username = "root";
+    String password = "root";
+
     @Test
     public void generator() {
         MysqlGenerator mysqlGenerator = new MysqlGenerator();
-        mysqlGenerator.generator("Sam", SeniorityEnum.MOGUL, "sys_",
-                "sys_user","sys_user_role","sys_menu","sys_menu_resource","sys_role_menu","sys_role","sys_role_resource","sys_resource");
+        mysqlGenerator.generator("Sam", SeniorityEnum.MOGUL, url, username, password,
+                "info", "info_", "info_photo");
     }
 }

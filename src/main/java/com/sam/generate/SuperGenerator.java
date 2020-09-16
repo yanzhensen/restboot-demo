@@ -40,7 +40,7 @@ public class SuperGenerator {
      *
      * @return
      */
-    protected InjectionConfig getInjectionConfig(SeniorityEnum seniority) {
+    protected InjectionConfig getInjectionConfig(SeniorityEnum seniority, String packageLocation) {
         /*return new InjectionConfig() {
             @Override
             public void initMap() {
@@ -58,7 +58,7 @@ public class SuperGenerator {
             // 自定义输出文件目录
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return getResourcePath(seniority) + "/mapper/sys/" + tableInfo.getEntityName() + "Mapper.xml";
+                return getResourcePath(seniority) + "/mapper/" + packageLocation + "/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         }));
     }
@@ -68,9 +68,9 @@ public class SuperGenerator {
      *
      * @return
      */
-    protected PackageConfig getPackageConfig() {
+    protected PackageConfig getPackageConfig(String packageLocation) {
         return new PackageConfig()
-                .setParent("com.sam.project.sys")
+                .setParent("com.sam.project." + packageLocation)
                 .setController("controller")
                 .setEntity("model.entity")
                 .setMapper("mapper")
@@ -146,7 +146,7 @@ public class SuperGenerator {
      *
      * @return
      */
-    protected DataSourceConfig getDataSourceConfig() {
+    protected DataSourceConfig getDataSourceConfig(String url, String username, String password) {
         return new DataSourceConfig()
                 // 数据库类型
                 .setDbType(DbType.MYSQL)
@@ -172,9 +172,9 @@ public class SuperGenerator {
                     }
                 })
                 .setDriverName("com.mysql.cj.jdbc.Driver")
-                .setUsername("root")
-                .setPassword("root")
-                .setUrl("jdbc:mysql://127.0.0.1:3306/restbootdb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false");
+                .setUsername(username)
+                .setPassword(password)
+                .setUrl(url);
     }
 
     /**
@@ -263,21 +263,29 @@ public class SuperGenerator {
     /**
      * 获取AutoGenerator
      *
-     * @param tableName
+     * @param author          作者
+     * @param seniority       获取路径形式
+     * @param url             数据库连接地址
+     * @param username        数据库用户名
+     * @param password        数据库密码
+     * @param packageLocation 路径包位置
+     * @param tablePrefix     表前缀  输入前缀则自动去掉表名前缀
+     * @param tableName       表名
      * @return
      */
-    protected AutoGenerator getAutoGenerator(String author, SeniorityEnum seniority, String tablePrefix, String... tableName) {
+    protected AutoGenerator getAutoGenerator(String author, SeniorityEnum seniority, String url, String username, String password,
+                                             String packageLocation, String tablePrefix, String... tableName) {
         return new AutoGenerator()
                 // 全局配置
                 .setGlobalConfig(getGlobalConfig(author, seniority))
                 // 数据源配置
-                .setDataSource(getDataSourceConfig())
+                .setDataSource(getDataSourceConfig(url, username, password))
                 // 策略配置
                 .setStrategy(getStrategyConfig(tablePrefix, tableName))
                 // 包配置
-                .setPackageInfo(getPackageConfig())
+                .setPackageInfo(getPackageConfig(packageLocation))
                 // 注入自定义配置，可以在 VM 中使用 cfg.abc 设置的值
-                .setCfg(getInjectionConfig(seniority))
+                .setCfg(getInjectionConfig(seniority, packageLocation))
                 // 模板配置
                 .setTemplate(getTemplateConfig());
     }

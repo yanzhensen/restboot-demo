@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sam.project.info.mapper.PhotoMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        photo_id, photo_table_id, photo_table_type, photo_random, photo_mime_type, photo_url, photo_name, photo_bucket, photo_status, photo_index, photo_user_id, photo_create_time
+    </sql>
+
+</mapper>

@@ -8,7 +8,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +23,6 @@ import java.util.Map;
  * @author Caratacus
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-@Slf4j
 @Component
 public class JWTUtils {
 
@@ -35,13 +33,19 @@ public class JWTUtils {
      * 生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。
      * 它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
      */
-    private static final String SECRET = "O8zCBXXw7ndPjt2gah";
 
     //分钟单位
     private static final long EXPIRE = 60 * 1000;
 
-    //设置分钟
+    //密文
+    private static String SECRET;
+    //分钟
     private static long MINUTE;
+
+    @Value("${custom.token.secret}")
+    public void setSecret(String secret) {
+        SECRET = secret;
+    }
 
     @Value("${custom.token.expire}")
     public void setMinute(long minute) {
@@ -74,27 +78,6 @@ public class JWTUtils {
         Date expireDate = new Date(nowDate.getTime() + EXPIRE * MINUTE);//设置有效时间 单位毫秒
         Map<String, Object> claims = new HashMap<>(1);//创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
         claims.put(UID, uid);
-        return Jwts.builder()//这里其实就是new一个JwtBuilder，设置jwt的body
-                .setClaims(claims)//如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
-                .setIssuedAt(nowDate)//iat: jwt的签发时间
-                .setExpiration(expireDate)//设置过期时间
-                .signWith(SignatureAlgorithm.HS256, SECRET)//设置签名使用的签名算法和签名使用的秘钥
-                .compact();//就开始压缩为xxxxxxxxxxxxxx.xxxxxxxxxxxxxxx.xxxxxxxxxxxxx这样的jwt
-    }
-
-    /**
-     * 生成token
-     *
-     * @param uid
-     * @return
-     */
-    public static String generate(Integer uid, String co) {
-        Date nowDate = new Date();
-        //过期时间
-        Date expireDate = new Date(nowDate.getTime() + EXPIRE * MINUTE);//1000分钟
-        Map<String, Object> claims = new HashMap<>(1);//创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
-        claims.put(UID, uid);
-        claims.put(CO, co);
         return Jwts.builder()//这里其实就是new一个JwtBuilder，设置jwt的body
                 .setClaims(claims)//如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
                 .setIssuedAt(nowDate)//iat: jwt的签发时间

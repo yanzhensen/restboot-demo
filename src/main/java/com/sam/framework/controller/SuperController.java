@@ -4,14 +4,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sam.common.utils.ApiUtils;
 import com.sam.common.utils.TypeUtils;
 import com.sam.framework.cons.PageCons;
+import com.sam.framework.model.ErrorCode;
 import com.sam.framework.responses.ApiResponses;
+import com.sam.framework.responses.FailedResponse;
 import com.sam.framework.utils.AntiSQLFilter;
+import com.sam.framework.utils.ResponseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
 /**
  * SuperController
@@ -28,6 +32,17 @@ public class SuperController {
 
     @Autowired
     protected HttpSession session;
+
+    /**
+     * 获取完整的请求路径，包括：域名，端口，上下文访问路径
+     *
+     * @return 服务地址
+     */
+    public String getWholeUrl() {
+        StringBuffer url = request.getRequestURL();
+        String contextPath = request.getServletContext().getContextPath();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
+    }
 
     /**
      * 成功返回
@@ -68,6 +83,21 @@ public class SuperController {
      */
     public ApiResponses<Void> success(HttpStatus status) {
         return ApiResponses.<Void>success(response, status);
+    }
+
+    /**
+     * 失败返回
+     *
+     * @param errorCode
+     * @param exception
+     */
+    public static <T> ApiResponses<T> failure(ErrorCode errorCode, Exception exception) {
+        return ResponseUtils.exceptionMsg(FailedResponse.builder().msg(errorCode.getMsg()), exception)
+                .error(errorCode.getError())
+                .show(errorCode.isShow())
+                .time(LocalDateTime.now())
+                .status(errorCode.getHttpCode())
+                .build();
     }
 
     /**

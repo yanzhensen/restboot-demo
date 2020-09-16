@@ -2,8 +2,7 @@ package com.sam.framework.enums;
 
 import com.sam.common.exception.UnknownEnumException;
 import com.sam.framework.model.ErrorCode;
-
-import javax.servlet.http.HttpServletResponse;
+import com.sam.framework.responses.HttpCode;
 
 /**
  * 业务异常枚举
@@ -15,64 +14,88 @@ public enum ErrorCodeEnum {
     /**
      * 400
      */
-    BAD_REQUEST(HttpServletResponse.SC_BAD_REQUEST, true, "请求参数错误或不完整"),
+    BAD_REQUEST(HttpCode.SC_BAD_REQUEST, true, "请求参数错误或不完整"),
     /**
      * JSON格式错误
      */
-    JSON_FORMAT_ERROR(HttpServletResponse.SC_BAD_REQUEST, true, "JSON格式错误"),
+    JSON_FORMAT_ERROR(HttpCode.SC_BAD_REQUEST, true, "JSON格式错误"),
     /**
      * 401
      */
-    UNAUTHORIZED(HttpServletResponse.SC_UNAUTHORIZED, true, "请先进行认证"),
+    UNAUTHORIZED(HttpCode.SC_UNAUTHORIZED, true, "请先进行认证"),
     /**
      * 403
      */
-    FORBIDDEN(HttpServletResponse.SC_FORBIDDEN, true, "无权查看"),
+    FORBIDDEN(HttpCode.SC_FORBIDDEN, true, "无权查看"),
     /**
      * 404
      */
-    NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, true, "未找到该路径"),
+    NOT_FOUND(HttpCode.SC_NOT_FOUND, true, "未找到该路径"),
     /**
      * 405
      */
-    METHOD_NOT_ALLOWED(HttpServletResponse.SC_METHOD_NOT_ALLOWED, true, "请求方式不支持"),
+    METHOD_NOT_ALLOWED(HttpCode.SC_METHOD_NOT_ALLOWED, true, "请求方式不支持"),
     /**
      * 406
      */
-    NOT_ACCEPTABLE(HttpServletResponse.SC_NOT_ACCEPTABLE, true, "不可接受该请求"),
+    NOT_ACCEPTABLE(HttpCode.SC_NOT_ACCEPTABLE, true, "不可接受该请求"),
     /**
      * 411
      */
-    LENGTH_REQUIRED(HttpServletResponse.SC_LENGTH_REQUIRED, true, "长度受限制"),
+    LENGTH_REQUIRED(HttpCode.SC_LENGTH_REQUIRED, true, "长度受限制"),
     /**
      * 415
      */
-    UNSUPPORTED_MEDIA_TYPE(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, true, "不支持的媒体类型"),
+    UNSUPPORTED_MEDIA_TYPE(HttpCode.SC_UNSUPPORTED_MEDIA_TYPE, true, "不支持的媒体类型"),
     /**
      * 416
      */
-    REQUESTED_RANGE_NOT_SATISFIABLE(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE, true, "不能满足请求的范围"),
+    REQUESTED_RANGE_NOT_SATISFIABLE(HttpCode.SC_REQUESTED_RANGE_NOT_SATISFIABLE, true, "不能满足请求的范围"),
     /**
      * 500
      */
-    INTERNAL_SERVER_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "服务器正在升级，请耐心等待"),
+    INTERNAL_SERVER_ERROR(HttpCode.SC_INTERNAL_SERVER_ERROR, true, "服务器正在升级，请耐心等待"),
     /**
      * 503
      */
-    SERVICE_UNAVAILABLE(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "请求超时"),
+    SERVICE_UNAVAILABLE(HttpCode.SC_SERVICE_UNAVAILABLE, true, "请求超时"),
+
+
+    //-----------------------------------------------图片上传自定义异常------------------------------------------------
     /**
-     * 演示系统，无法该操作
+     * 601 秘钥不正确/失效/冻结
      */
-    DEMO_SYSTEM_CANNOT_DO(HttpServletResponse.SC_SERVICE_UNAVAILABLE, true, "演示系统，无法该操作"),
+    PHO_SECRET_ERROR(HttpCode.PHO_SECRET_ERROR,true,"秘钥不正确/失效/冻结"),
+    /**
+     * 602 指定空间不存在
+     */
+    PHO_BUCKET_NOT_EXIST(HttpCode.PHO_BUCKET_NOT_EXIST,true,"指定空间不存在"),
+    /**
+     * 603 指定资源不存在或已被删除
+     */
+    PHO_RESOURCE_NOT_EXIST(HttpCode.PHO_RESOURCE_NOT_EXIST,true,"指定资源不存在或已被删除"),
+    /**
+     * 604 指定资源不存在或已被删除
+     */
+    PHO_0000(HttpCode.PHO_RESOURCE_NOT_EXIST,true,"指定资源不存在或已被删除"),
+    /**
+     * 605 服务器异常/回调异常
+     */
+    PHO_INTERNAL_SERVER_ERROR(HttpCode.PHO_INTERNAL_SERVER_ERROR,true,"服务器异常/回调异常"),
+
     //----------------------------------------------------业务异常----------------------------------------------------
-    /**
-     * 没有任何信息修改
-     */
-    BAD_INFORMATION_NULL(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "没有任何信息修改"),
     /**
      * 添加失败
      */
-    BAD_ADD_FAILURE(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, true, "添加失败"),
+    BAD_ADD_FAILURE(HttpCode.SC_INTERNAL_SERVER_ERROR, true, "添加失败"),
+    /**
+     * 删除失败
+     */
+    BAD_DELETE_FAILURE(HttpCode.SC_INTERNAL_SERVER_ERROR, true, "删除失败"),
+    /**
+     * 没有任何信息修改
+     */
+    BAD_UPDATE_FAILURE(HttpCode.SC_INTERNAL_SERVER_ERROR, true, "修改失败"),
 
     ;
 

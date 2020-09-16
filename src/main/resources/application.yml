@@ -68,8 +68,8 @@ spring:
   servlet:
     multipart:
       enabled: true #是否启用http上传处理
-      max-file-size: 10MB #最大请求文件的大小
       max-request-size: 10MB #设置单个文件最大长度
+      max-file-size: 20MB #最大请求文件的大小
 datasource:
   ## 云端数据源
   driver: com.mysql.cj.jdbc.Driver
@@ -81,6 +81,6 @@ sam:
   name: Sam # 名称
   version: 1.0 # 版本
   copyrightYear: 2020 # 版权年份
-  profile: D:/SamPhoto/uploadPath # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/SamPhoto/uploadPath # 文件路径 示例（ Windows配置D:/SamPhoto/uploadPath，Linux配置 /home/SamPhoto/uploadPath）
   addressEnabled: false # 获取ip地址开关
-  pwdSalt: "as35ilsdfjinx7zxc"
+  pwdSalt: "as35ilsdfjinx7zxc" #密码盐

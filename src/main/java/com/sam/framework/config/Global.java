@@ -35,7 +35,7 @@ public class Global {
     private static String profile;
 
     /**
-     * 上传路径
+     * 密码盐
      */
     private static String pwdSalt;
 
@@ -94,10 +94,4 @@ public class Global {
         return getProfile() + "/download/";
     }
 
-    /**
-     * 获取上传路径
-     */
-    public static String getUploadPath() {
-        return getProfile() + "/upload";
-    }
 }

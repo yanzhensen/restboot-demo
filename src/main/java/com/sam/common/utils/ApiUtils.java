@@ -1,7 +1,6 @@
 package com.sam.common.utils;
 
 import com.sam.common.spring.ApplicationUtils;
-import com.sam.framework.cons.APICons;
 import com.sam.framework.enums.ErrorCodeEnum;
 import com.sam.framework.utils.ApiAssert;
 import io.jsonwebtoken.Claims;
@@ -15,12 +14,15 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * API工具类
  *
- * @author Caratacus
+ * @author Sam
  */
 @SuppressWarnings("ALL")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -50,6 +52,10 @@ public abstract class ApiUtils {
         Claims claims = JWTUtils.getClaim(token);
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
         return claims.get(JWTUtils.CO, String.class);
+    }
+
+    public static String toMD5(String plainText) {
+        return toMD5(plainText, 32);
     }
 
     /**

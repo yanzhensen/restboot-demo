@@ -123,6 +123,11 @@ public class WebMvcAutoConfiguration implements WebMvcConfigurer {
         return authorizationProcessor;
     }
 
+    /**
+     * 当LocalDate,LocalTime,LocalDateTime作为RequestParam或者PathVariable时
+     * 直接进行格式化操作
+     */
+
     @Bean
     public Converter<String, LocalDate> localDateConverter() {
         return new Converter<String, LocalDate>() {

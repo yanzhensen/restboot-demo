@@ -66,5 +66,8 @@ public class UserDTO extends Convert {
     @ApiModelProperty(notes = "用户角色ID")
     private List<Integer> roleIds;
 
+    @ApiModelProperty(notes = "头像")
+    private String phoHead;
+
 
 }

@@ -74,7 +74,7 @@ public class SwaggerAutoConfiguration {
     List<Parameter> getParameters() {
         return Collections.singletonList(new ParameterBuilder()
                 .name("Authorization")
-                .defaultValue("Bearer " + JWTUtils.generate(1, "restboot"))
+                .defaultValue("Bearer " + JWTUtils.generate(1))
                 .description("Authorization")
                 .modelRef(new ModelRef("string"))
                 .parameterType("header")

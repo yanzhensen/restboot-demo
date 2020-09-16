@@ -33,14 +33,22 @@ import com.sam.common.enums.SeniorityEnum;
 public class MysqlGenerator extends SuperGenerator {
 
     /**
-     * <p>
      * MySQL generator
-     * </p>
+     *
+     * @param author          作者
+     * @param seniority       获取路径形式
+     * @param url             数据库连接地址
+     * @param username        数据库用户名
+     * @param password        数据库密码
+     * @param packageLocation 路径包位置
+     * @param tablePrefix     表前缀  输入前缀则自动去掉表名前缀
+     * @param tableName       表名
+     * @return
      */
-    public void generator(String author, SeniorityEnum seniority, String tablePrefix, String... tableName) {
-
+    public void generator(String author, SeniorityEnum seniority, String url, String username, String password,
+                          String packageLocation, String tablePrefix, String... tableName) {
         // 代码生成器
-        AutoGenerator mpg = getAutoGenerator(author, seniority, tablePrefix, tableName);
+        AutoGenerator mpg = getAutoGenerator(author, seniority, url, username, password, packageLocation, tablePrefix, tableName);
         mpg.execute();
         if (tableName == null) {
             System.err.println(" Generator Success !");

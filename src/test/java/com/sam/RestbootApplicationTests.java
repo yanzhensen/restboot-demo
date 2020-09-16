@@ -1,6 +1,6 @@
 package com.sam;
 
-import com.sam.common.utils.JWTUtils;
+import com.sam.common.utils.file.AuthFile;
 import com.sam.framework.config.Global;
 import com.sam.framework.enums.ErrorCodeEnum;
 import com.sam.framework.utils.ApiAssert;
@@ -14,17 +14,18 @@ class RestbootApplicationTests {
     @Test
     void contextLoads() {
         System.out.println("Global = " + Global.getName());
-        String token = JWTUtils.generate(1, "restboot");
+        //秘钥
+        String accessKey = "87csdas54dd80g";
+        String secretKey = "47486asz4k4366";
+        String token = AuthFile.generate(accessKey, secretKey, "", "callbackUrl", "callbackBody");
         System.out.println("token = " + token);
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, token);
-        Claims claims = JWTUtils.getClaim(token);
+        Claims claims = AuthFile.getClaim(token);
         System.out.println("token = " + token);
         System.out.println("claims = " + claims);
         ApiAssert.notNull(ErrorCodeEnum.UNAUTHORIZED, claims);
-        Integer uid = claims.get(JWTUtils.UID, Integer.class);
-        String co = claims.get(JWTUtils.CO, String.class);
-        System.out.println(uid);
-        System.out.println(co);
+        String secret_key = claims.get(AuthFile.SECRET_KEY, String.class);
+        System.out.println(secret_key);
     }
 
 }
