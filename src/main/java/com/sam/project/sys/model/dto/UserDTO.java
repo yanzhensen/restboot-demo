@@ -1,5 +1,9 @@
 package com.sam.project.sys.model.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.sam.enums.StatusEnum;
 import com.sam.framework.model.convert.Convert;
 import io.swagger.annotations.ApiModel;
@@ -57,9 +61,13 @@ public class UserDTO extends Convert {
     @ApiModelProperty(value = "创建者ID")
     private Integer createUid;
 
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @ApiModelProperty(value = "修改时间")
     private LocalDateTime updateTime;
 
+//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+//    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 

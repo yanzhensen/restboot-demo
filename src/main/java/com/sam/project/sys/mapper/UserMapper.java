@@ -1,7 +1,7 @@
 package com.sam.project.sys.mapper;
 
-import com.sam.project.sys.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sam.project.sys.model.entity.User;
 
 /**
  * <p>
@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author Sam
  * @since 2020-07-05
  */
+//启用二级缓存
+//@CacheNamespace(implementation = MybatisRedisCache.class, eviction = MybatisRedisCache.class)
 public interface UserMapper extends BaseMapper<User> {
 
 }

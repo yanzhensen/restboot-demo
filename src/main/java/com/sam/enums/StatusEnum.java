@@ -1,7 +1,9 @@
 package com.sam.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.sam.common.exception.UnknownEnumException;
 import com.sam.framework.enums.IEnum;
 
 /**
@@ -26,5 +28,16 @@ public enum StatusEnum implements IEnum {
     @JsonValue
     public int getValue() {
         return this.value;
+    }
+
+    //序列化使用
+    @JsonCreator
+    public static StatusEnum getEnum(int value) {
+        for (StatusEnum statusEnum : StatusEnum.values()) {
+            if (statusEnum.getValue() == value) {
+                return statusEnum;
+            }
+        }
+        throw new UnknownEnumException("Error: Invalid StatusEnum type value: " + value);
     }
 }

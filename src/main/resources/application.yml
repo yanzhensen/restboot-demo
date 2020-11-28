@@ -13,6 +13,8 @@ mybatis-plus:
   type-enums-package: com.sam.enums
   # 实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.sam.project.*.model.entity;com.sam.project.*.model.dto
+  configuration:
+    cache-enabled: true #开启二级缓存
 spring:
   jackson:
     time-zone: GMT+8
