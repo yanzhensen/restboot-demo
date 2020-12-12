@@ -55,11 +55,12 @@ public class JWTUtils {
     /**
      * 生成token
      * token 生成策略：
-     * 1.设置真正的token 7天有效期  7天后强制重登   (主要)
-     * 2.登录后设置redis作为判断登录根据 设置每次操作有效时间 30分钟  操作则续时长  (次要)
-     * 30分钟未操作 redis key失效 USER_ACCESS_TOKEN_ + "UID"
+     * 1.设置真正的refreshToken 3天有效期  3天后强制重登   (主要)
+     * 2.登录后设置redis作为判断登录根据 设置每次操作有效时间 20分钟  操作则续时长  (次要)
+     * 3.前端定时每6分钟去获取一次新token 并且前端设置15分钟未操作直接退出登录
+     * 20分钟未操作 redis key失效 USER_ACCESS_TOKEN_ + "UID"
      * 拦截器：
-     * 1.先判断token是否过期  2.判断redis是否失效
+     * 1.判断token是否过期
      * 异常：（token不建议持久化操作）
      * 1.多人登录生成多个token - 解决 在登录的时候 使用redis实现顶号操作
      * 2.多个token都没过期怕被盗用 - 解决 使用reids做黑名单二次判断
@@ -67,7 +68,6 @@ public class JWTUtils {
      * 4.项目内互调用 token怎么共享 这要在过滤器中多加判断了
      * 调用时候可以建立一个短时间5分钟的特殊token(token前缀来个特殊标识 如：FREE_+ "")
      * 如果识别到FREE_则校验有效时长 通过则放行
-     * 5.redis挂了怎么判断有效时长
      *
      * @param uid
      * @return

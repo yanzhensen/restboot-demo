@@ -33,7 +33,8 @@ spring:
 custom:
   token:
     secret: "O8zCBXXw7ndPjt2gah"  #设置密文
-    expire: 30  #设置过期时间 分钟
+    expire: 20  #设置过期时间 分钟
+    refresh: 3  #设置refreshToken最大值 天
   pho-token:
     secret: "Ts52asdjkoiU8U3EEz"  #设置密文
     expire: 5  #设置过期时间 分钟

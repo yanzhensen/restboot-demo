@@ -20,6 +20,7 @@ import com.sam.project.sys.service.IUserRoleService;
 import com.sam.project.sys.service.IUserService;
 import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +39,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
+
+    @Value("${custom.token.refresh}")
+    private Long refreshTime;
 
     @Resource
     private IUserRoleService userRoleService;
@@ -91,8 +95,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setLoginIp(ipAddr);
         updateById(user);
         String token = JWTUtils.generate(user.getUid());
-        //设置token30分钟过期
-        redisUtils.setEx(KeyCons.USER_ACCESS_TOKEN + user.getUid(), token, 30, TimeUnit.MINUTES);
+//        设置token30分钟过期
+//        redisUtils.setEx(KeyCons.USER_ACCESS_TOKEN + user.getUid(), token, 30, TimeUnit.MINUTES);
+        //设置RefreshToken 指定refreshTime时间内，携带有效token 即可延长token时长（返回新token）
+        redisUtils.setEx(KeyCons.USER_REFRESH_TOKEN + user.getUid(), token, refreshTime, TimeUnit.DAYS);
         JSONObject obj = new JSONObject();
         obj.put("token", token);
         obj.put("uid", user.getUid());

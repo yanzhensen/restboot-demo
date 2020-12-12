@@ -51,11 +51,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         String token = getToken(httpRequest);
         String method = httpRequest.getMethod();
         String requestUri = urlPathHelper.getOriginatingRequestUri(httpRequest);
+        System.out.println("method: " + method + " url: " + requestUri);
         if (StringUtils.isNotEmpty(contextPath)) {
             requestUri = requestUri.replaceFirst(contextPath, "");
         }
-        System.out.println(method);
-        System.out.println(requestUri);
         Optional<String> optional = resourceService.getResourcePerms(method)
                 .stream()
                 .filter(match(method, requestUri))

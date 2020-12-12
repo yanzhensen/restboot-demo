@@ -9,6 +9,10 @@ public interface KeyCons {
      */
     String USER_ACCESS_TOKEN = "USER_ACCESS_TOKEN_";
     /**
+     * 用户登录刷新token
+     */
+    String USER_REFRESH_TOKEN = "USER_REFRESH_TOKEN_";
+    /**
      * 后台所有权限
      */
     String ALL_RESOURCE = "USER_ALL_RESOURCE";
