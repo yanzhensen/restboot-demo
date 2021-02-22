@@ -3,6 +3,7 @@ package com.sam.framework.shiro;
 import com.sam.common.utils.JWTUtils;
 import com.sam.framework.cons.APICons;
 import com.sam.framework.enums.ErrorCodeEnum;
+import com.sam.framework.utils.ApiAssert;
 import com.sam.framework.utils.ResponseUtils;
 import com.sam.project.sys.model.dto.ResourcePermDTO;
 import com.sam.project.sys.service.IResourceService;
@@ -39,6 +40,8 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) {
         //获取请求token
         String token = getToken(WebUtils.toHttp(servletRequest));
+        //判断Token是否过期
+        if (StringUtils.isNotEmpty(token)) ApiAssert.isFalse(ErrorCodeEnum.UNAUTHORIZED, JWTUtils.isExpired(token));
         return StringUtils.isBlank(token) ? null : new JWTToken(token);
     }
 

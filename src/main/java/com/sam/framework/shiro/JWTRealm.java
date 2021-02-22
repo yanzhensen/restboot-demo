@@ -1,8 +1,5 @@
 package com.sam.framework.shiro;
 
-import com.sam.common.utils.JWTUtils;
-import com.sam.framework.enums.ErrorCodeEnum;
-import com.sam.framework.utils.ApiAssert;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -40,8 +37,6 @@ public class JWTRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         String token = (String) auth.getPrincipal();
-        // 判断Token是否过期
-        ApiAssert.isFalse(ErrorCodeEnum.UNAUTHORIZED, JWTUtils.isExpired(token));
         return new SimpleAuthenticationInfo(token, token, getName());
     }
 }

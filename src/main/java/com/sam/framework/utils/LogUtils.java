@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -81,9 +82,7 @@ public abstract class LogUtils {
     public static void writeLog(String str) {
         try {
             File file = new File(PATH + MESSAGE_LOG);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            existsFile(file);
             FileOutputStream out = new FileOutputStream(file, true);
             StringBuffer sb = new StringBuffer();
             sb.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -106,9 +105,7 @@ public abstract class LogUtils {
     public static void writeLog(String str, String path) {
         try {
             File file = new File(PATH + path);
-            if (!file.exists()) {
-                file.createNewFile();
-            }
+            existsFile(file);
             FileOutputStream out = new FileOutputStream(file, true);
             StringBuffer sb = new StringBuffer();
             sb.append(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -119,6 +116,22 @@ public abstract class LogUtils {
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 是否存在该路径/文件
+     *
+     * @param file
+     * @throws IOException
+     */
+    private static void existsFile(File file) throws IOException {
+        File parentFile = file.getParentFile();
+        if (!parentFile.exists()) {
+            parentFile.mkdirs();
+        }
+        if (!file.exists()) {
+            file.createNewFile();
         }
     }
 }
